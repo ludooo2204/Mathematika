@@ -4,11 +4,14 @@ import {
   TextInput,
   StyleSheet,
   FlatList,
+  Text,
   Button,
+  Dimensions ,
   Image,
 } from 'react-native';
 import Multiplication from './components/multiplication';
 import Division from './components/division';
+import {FlatGrid} from 'react-native-super-grid'
 import ThemeContext from './components/Context';
 // do not forget to add fresco animation to build.gradle
 
@@ -17,7 +20,21 @@ export default function App() {
   const [term, updateTerm] = useState('');
   const [result, setResult] = useState('');
   const [theme, setTheme] = useState("light")
+  const [test, setTest] = useState(0)
   const [resultProps, setResultProps] = useState('');
+  const windowWidth = Dimensions.get('window').width;
+
+  const nombre = 123456456789
+
+  const nombreString = nombre.toString().split('')
+  const nbrChiffre = nombreString.length+1
+
+
+  console.log(nbrChiffre)
+
+
+
+
   const handleValidate = () => {
     console.log('validate', result);
     setResultProps(result);
@@ -46,12 +63,26 @@ export default function App() {
   const contextValue = {
     theme: theme, //ou juste theme, 
     updateTheme: setTheme,
+    test,
+    setTest,
   };
   return (
     <ThemeContext.Provider value={contextValue}>
       <View style={styles.view}>
         <View>
           <Button title="change le theme" onPress={()=>setTheme('Dark')} />
+          <FlatGrid
+  itemDimension={windowWidth/nbrChiffre}
+  data={nombreString}
+spacing={0}
+  renderItem={({ item }) => (<Text     style={{justifyContent: 'flex-end',
+  borderRadius: 5,
+  padding: 10,
+  
+  backgroundColor:"white",
+  height: windowWidth/nbrChiffre
+  }}>{item}</Text>)}
+/>
           <TextInput
             style={{backgroundColor: 'white'}}
             placeholder="c'est ici"
@@ -100,17 +131,17 @@ export default function App() {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    alignItems: 'center',
-    padding: 5,
+    // alignItems: 'center',
+    // padding: 5,
     backgroundColor: 'darkblue',
   },
   textInput: {
-    width: '100%',
+    // width: '100%',
     height: 50,
     color: 'white',
   },
   image: {
-    width: 400,
+    // width: 400,
     height: 450,
     borderWidth: 3,
     marginBottom: 5,

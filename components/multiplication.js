@@ -1,13 +1,17 @@
 import React, { useState,useEffect,useContext } from 'react';
 import { Text } from 'react-native'
-import ThemeContext from './Context';
+import dataContext from './Context';
 
 
 const Multiplication = ({input})=>{
     const [a,SetA]=useState(null)
     const [b,SetB]=useState(null)
-    const contextValue= useContext(ThemeContext)
-    console.log("fils :",contextValue.theme)
+    const contextValue= useContext(dataContext)
+    // console.log("fils :",contextValue.theme)
+    // console.log("contrxtvaleu==ue :",contextValue)
+    const toto = (contextValue.test+1)
+    console.log('toto',toto)
+    console.log("contrxtvaleu==ue :",contextValue)
     useEffect(() => {
         const first=(Math.round(Math.random()*9)+1)
         console.log(first)
