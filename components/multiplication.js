@@ -10,15 +10,15 @@ const Multiplication = ({input})=>{
     // console.log("fils :",contextValue.theme)
     // console.log("contrxtvaleu==ue :",contextValue)
     const toto = (contextValue.test+1)
-    console.log('toto',toto)
+    // console.log('toto',toto)
     console.log("contrxtvaleu==ue :",contextValue)
     useEffect(() => {
         const first=(Math.round(Math.random()*9)+1)
-        console.log(first)
+        // console.log(first)
         SetA(first)
         SetB(Math.round(Math.random()*9)+1)
-        console.log("a",a)
-        console.log("b",b)
+        // console.log("a",a)
+        // console.log("b",b)
     
     }, [])
     const A =()=>{return a}
