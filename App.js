@@ -1,50 +1,31 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, Text,StyleSheet} from 'react-native';
 import Multiplication from './components/multiplication';
 import Division from './components/division';
 import Gif from './components/gif';
+import styles from './components/styles';
 
 // do not forget to add fresco animation to build.gradle
-import ThemeContext from './components/Context';
+import DataContext from './components/Context';
 
 export default function App() {
-  const [theme, setTheme] = useState('light');
-  const [test, setTest] = useState(0);
+  const [dataContext, setDataContext] = useState(null);
+ 
   const [resultProps, setResultProps] = useState('');
 
   const contextValue = {
-    theme: theme, //ou juste theme,
-    updateTheme: setTheme,
-    test,
-    setTest,
+    data:dataContext, //ou juste theme,
+    updateData :setDataContext
   };
   return (
-    <ThemeContext.Provider value={contextValue}>
+    <DataContext.Provider value={contextValue}>
       <View style={styles.view}>
         <Gif />
+       {/* <Text>{dataContext}</Text>  */}
         <Multiplication input={resultProps} />
         {/* <Division /> */}
       </View>
-    </ThemeContext.Provider>
+    </DataContext.Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    // alignItems: 'center',
-    // padding: 5,
-    // backgroundColor: 'darkblue',
-  },
-  textInput: {
-    // width: '100%',
-    height: 50,
-    color: 'black',
-  },
-  image: {
-    // width: 400,
-    height: 300,
-    borderWidth: 3,
-    marginBottom: 5,
-  },
-});

@@ -4,13 +4,11 @@ import {
     View,
     TextInput,
     StyleSheet,
-    FlatList,
-    Text,
-    Button,
-    Dimensions,
     Image,
+    FlatList,
     TouchableOpacity,
   } from 'react-native';
+  import styles from './styles'
 export default function Gif() {
     const [gifs, setGifs] = useState([]);
     const [term, updateTerm] = useState('');
@@ -44,7 +42,7 @@ export default function Gif() {
           placeholderTextColor="#f0f"
           style={styles.textInput}
           onChangeText={text => onEdit(text)}
-          // onSubmitEditing=
+
         />
 
         {gifs.length > 0 && (
@@ -58,38 +56,9 @@ export default function Gif() {
             />
           )}
 
-             {/* <FlatList
-        data={gifs}
-        renderItem={({item}) => (
-          <Image
-            resizeMode='contain'
-            style={styles.image}
-            source={{uri: item.images.original.url}}
-          />
-        )}
-      /> */}
       </>
     )
 
     
 }
 
-const styles = StyleSheet.create({
-    view: {
-      flex: 1,
-      // alignItems: 'center',
-      // padding: 5,
-      // backgroundColor: 'darkblue',
-    },
-    textInput: {
-      // width: '100%',
-      height: 50,
-      color: 'black',
-    },
-    image: {
-      // width: 400,
-      height: 300,
-      borderWidth: 3,
-      marginBottom: 5,
-    },
-  });

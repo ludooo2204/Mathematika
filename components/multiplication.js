@@ -1,224 +1,216 @@
-import React, { useState,useEffect,useContext } from 'react';
-import { Text,View,Button,Dimensions,TextInput } from 'react-native'
-import dataContext from './Context';
+import React, {useState, useEffect, useContext} from 'react';
+import {
+  Text,
+  View,
+  Button,
+  Dimensions,
+  TextInput,
+  StyleSheet
+} from 'react-native';
+import DataContext from './Context';
+import LigneMultiplication from './LigneMultiplication';
+
 import {FlatGrid} from 'react-native-super-grid';
 
 
-const Multiplication = ({input})=>{
-    const [a,SetA]=useState(null)
-    const [b,SetB]=useState(null)
-    const [arrayResult1, setArrayResult1] = useState([]);
-    const [arrayResult2, setArrayResult2] = useState([]);
-    const [arrayResult3, setArrayResult3] = useState([]);
-    const [retenue, setRetenue] = useState();
-    const contextValue= useContext(dataContext)
-    
+const Multiplication = ({input}) => {
+  const [nombre1Array, setnombre1Array] = useState(null);
+  const [nombre2Array, setnombre2Array] = useState(null);
+  const [arrayResult1, setArrayResult1] = useState([]);
+  const [arrayResult2, setArrayResult2] = useState([]);
+  const [arrayResult3, setArrayResult3] = useState([]);
+
+  const [retenue, setRetenue] = useState('0');
+  const { data, updateData } = useContext(DataContext);
+  
   const windowWidth = Dimensions.get('window').width;
-  const choixNbrDigit1 = 3;
-  const choixNbrDigit2 = 3;
-  const nombre1 = Math.round(Math.random() * Math.pow(10, choixNbrDigit1));
-  const nombre2 = Math.round(Math.random() * Math.pow(10, choixNbrDigit2));
-  let nombreString1 = nombre1.toString().split('');
-  let nombreString2 = nombre2.toString().split('');
-  const nbrChiffre1 = nombreString1.length;
-  const nbrChiffre2 = nombreString2.length;
-  const diff = Math.abs(nbrChiffre2 - nbrChiffre1);
 
-  console.log('nbr de chiffre pour le 1', nbrChiffre1, '=>', nombreString1);
-  console.log('nbr de chiffre pour le 2', nbrChiffre2, '=>', nombreString2);
-  console.log('diff ', diff);
-  for (let i = 0; i < diff; i++) {
-    nombreString2.unshift('');
-  }
-  console.log('nbrString2', nombreString2);
-  nombreString2.unshift('X');
-  nombreString1.unshift('');
-  console.log('nbrString2', nombreString2);
-
-  console.log(nbrChiffre2);
-    // console.log("fils :",contextValue.theme)
-    // console.log("contrxtvaleu==ue :",contextValue)
-    const toto = (contextValue.test+1)
-    // console.log('toto',toto)
-    console.log("contrxtvaleu==ue :",contextValue)
-    useEffect(() => {
-        const first=(Math.round(Math.random()*9)+1)
-        // console.log(first)
-        SetA(first)
-        SetB(Math.round(Math.random()*9)+1)
-        // console.log("a",a)
-        // console.log("b",b)
+  useEffect(() => {
+    console.log('go');
     
-    }, [])
-    const A =()=>{return a}
-    const B =()=>{return b}
-    const resultat=a*b==input?"bon":"faudx";
-    return(
+    const choixNbrDigit1 = 3;
+    const choixNbrDigit2 = 2;
+    const nombre1 = Math.round(Math.random() * Math.pow(10, choixNbrDigit1));
+    const nombre2 = Math.round(Math.random() * Math.pow(10, choixNbrDigit2));
+    console.log('nbr1 ', nombre1, ' & nbr 2 ', nombre2);
+    let nombre1Array = nombre1.toString().split('');
+    let nombre2Array = nombre2.toString().split('');
+
+    const nbrChiffre1 = nombre1Array.length;
+    const nbrChiffre2 = nombre2Array.length;
+    const diff = Math.abs(nbrChiffre2 - nbrChiffre1);
+
+    for (let i = 0; i < diff; i++) {
+      nombre2Array.unshift('');
+    }
+
+    nombre2Array.unshift('X');
+    nombre1Array.unshift('');
+
+    setnombre1Array(nombre1Array);
+    setnombre2Array(nombre2Array);
+    let dataObject={nombre1Array:nombre1Array,nombre2Array:nombre2Array,windowWidth:windowWidth}
+    console.log('dataObject')
+    console.log(dataObject)
+    // updateData({nombre1Array:nombre1Array,nombre2Array:nombre2Array,windowWidth:windowWidth})
+  }, []);
+
+
+
+
+  const styles = nombre2Array
+    ? StyleSheet.create({
+        inputRetenue: {
+          borderRadius: 5,
+          backgroundColor: 'green',
+          fontSize: 50,
+          marginTop: 10,
+          paddingHorizontal: (windowWidth * 0.98) / nombre2Array.length / 5,
+          height: windowWidth * 0.2,
+          width: windowWidth * 0.2,
+        },
+        textOperation: {
+          borderRadius: 5,
+          backgroundColor: '#ebedf0',
+          fontSize: 40,
+          paddingHorizontal: (windowWidth * 0.8) / nombre2Array.length / 3,
+          height: (windowWidth * 0.98) / nombre2Array.length,
+        },
+        inputOperation: {
+          borderRadius: 5,
+          backgroundColor: '#ebedf0',
+          fontSize: 40,
+          paddingHorizontal: (windowWidth * 0.7) / nombre2Array.length / 3,
+          height: (windowWidth * 0.98) / nombre2Array.length,
+        },
+      })
+    : null;
+    nombre2Array ?console.log( nombre1Array, nombre2Array,windowWidth,styles):null
+  return (
+    <>
+      {nombre2Array ? (
         <View>
-        <Button title="change le theme" onPress={() => setTheme('Dark')} />
-        <View
-          style={{
-            alignItems: 'flex-end',
-            // backgroundColor: 'green',
-            height: (windowWidth * 0.98) / nombreString2.length,
-          }}>
-          <FlatGrid
-            itemDimension={(windowWidth * 0.98) / nombreString2.length}
-            data={nombreString1}
-            fixed
-            // style={{}}
-            spacing={0}
-            renderItem={({item}) => (
-              <Text
-                style={{
-                  // al: 'center',
-                  borderRadius: 5,
-                  // padding: ,
-
-                  backgroundColor: '#ebedf0',
-                  fontSize: 40,
-                  paddingHorizontal:
-                    (windowWidth * 0.8) / nombreString2.length / 3,
-                  height: (windowWidth * 0.98) / nombreString2.length,
-                }}>
-                {item}
-              </Text>
-            )}
+          <Button title="change le theme" onPress={() => setTheme('Dark')} />
+          <LigneMultiplication
+            nombre1Array={nombre1Array}
+            nombre2Array={nombre2Array}
+                      
           />
-        </View>
-
-        <View
-          style={{
-            alignItems: 'flex-end',
-            // backgroundColor: 'blue',
-            height: windowWidth / nombreString2.length - 1,
-          }}>
-          <FlatGrid
-            itemDimension={(windowWidth * 0.98) / nombreString2.length}
-            data={nombreString2}
-            fixed
-            spacing={0}
-            renderItem={({item}) => (
-              <Text
-                style={{
-                  // al: 'center',
-                  borderRadius: 5,
-                  // padding: ,
-
-                  backgroundColor: '#ebedf0',
-                  fontSize: 40,
-                  paddingHorizontal:
-                    (windowWidth * 0.8) / nombreString2.length / 3,
-                  height: (windowWidth * 0.98) / nombreString2.length,
-                }}>
-                {item}
-              </Text>
-            )}
+          <LigneMultiplication
+            nombre1Array={nombre1Array}
+            nombre2Array={nombre2Array}
+           
           />
-        </View>
-        <View
-          style={{
-            height: 3,
-            backgroundColor: 'black',
-          }}></View>
-        <View
-          style={{
-            alignItems: 'flex-start',
-            // backgroundColor: 'blue',
-            // flex:1
-            // height: windowWidth,
-            height: windowWidth / nombreString2.length - 1,
-          }}>
-          <FlatGrid
-            itemDimension={(windowWidth * 0.98) / nombreString2.length}
-            fixed
-            spacing={0}
-            data={[...Array(7).keys()]}
-            // data={[...Array(3).keys()]}
-            renderItem={({item, index}) => {
-              return (
-                <View>
-                  <TextInput
-                    keyboardType="number-pad"
-                    style={{
-                      borderRadius: 5,
-                      backgroundColor: '#ebedf0',
-                      fontSize: 40,
-                      paddingHorizontal:
-                        (windowWidth * 0.7) / nombreString2.length / 3,
-                      height: (windowWidth * 0.98) / nombreString2.length,
-                    }}
-                    onChangeText={text => {
-                      arrayResult1[index] = text;
-                      setArrayResult1(arrayResult1);
-                    }}
-                    value={arrayResult1[index]}
-                  />
-                </View>
-              );
-            }}
-          />
-        </View>
-        <View
-          style={{
-            alignItems: 'flex-start',
-            // backgroundColor: 'blue',
-            // flex:1
-            // height: windowWidth,
-            height: windowWidth / nombreString2.length - 1,
-          }}>
-          <FlatGrid
-            itemDimension={(windowWidth * 0.98) / nombreString2.length}
-            fixed
-            spacing={0}
-            data={[...Array(7).keys()]}
-            // data={[...Array(3).keys()]}
-            renderItem={({item, index}) => {
-              return (
-                <View>
-                  <TextInput
-                    style={{
-                      borderRadius: 5,
-                      backgroundColor: '#ebedf0',
-                      fontSize: 40,
-                      paddingHorizontal:
-                        (windowWidth * 0.7) / nombreString2.length / 3,
-                      height: (windowWidth * 0.98) / nombreString2.length,
-                    }}
-                    keyboardType="number-pad"
-                    onChangeText={text => {
-                      arrayResult2[index] = text;
-                      setArrayResult2(arrayResult2);
-                    }}
-                    value={arrayResult2[index]}
-                  />
-                </View>
-              );
-            }}
-          />
-        </View>
-
-        <View>
-          <TextInput
-            keyboardType="numeric"
+          <View
             style={{
-              borderRadius: 5,
-              backgroundColor: '#ebedf0',
-              fontSize: 40,
-              marginTop: 10,
-              paddingHorizontal:
-                (windowWidth * 0.7) / nombreString2.length / 3,
-              height: (windowWidth * 0.98) / nombreString2.length,
-              width: (windowWidth * 0.98) / nombreString2.length,
-            }}
-            onChangeText={text => {
-              setRetenue(text);
-            }}
-            value={retenue}
-          />
-        </View>
-      </View>
+              alignItems: 'flex-end',
+              height: (windowWidth * 0.98) / nombre2Array.length,
+            }}>
+            <FlatGrid
+              itemDimension={(windowWidth * 0.98) / nombre2Array.length}
+              data={nombre1Array}
+              fixed
+              spacing={0}
+              renderItem={({item}) => (
+                <Text style={styles.textOperation}>{item}</Text>
+              )}
+            />
+          </View>
 
-    )
-}
-export default Multiplication
+          <View
+            style={{
+              alignItems: 'flex-end',
+              height: windowWidth / nombre2Array.length - 1,
+            }}>
+            <FlatGrid
+              itemDimension={(windowWidth * 0.98) / nombre2Array.length}
+              data={nombre2Array}
+              fixed
+              spacing={0}
+              renderItem={({item}) => (
+                <Text style={styles.textOperation}>{item}</Text>
+              )}
+            />
+          </View>
+          <View
+            style={{
+              height: 3,
+              backgroundColor: 'black',
+            }}></View>
+          <View
+            style={{
+              alignItems: 'flex-start',
+              // backgroundColor: 'blue',
+              // flex:1
+              // height: windowWidth,
+              height: windowWidth / nombre2Array.length - 1,
+            }}>
+            <FlatGrid
+              itemDimension={(windowWidth * 0.98) / nombre2Array.length}
+              fixed
+              spacing={0}
+              data={[...Array(7).keys()]}
+              // data={[...Array(3).keys()]}
+              renderItem={({item, index}) => {
+                return (
+                  <View>
+                    <TextInput
+                      keyboardType="number-pad"
+                      style={styles.inputOperation}
+                      onChangeText={text => {
+                        arrayResult1[index] = text;
+                        setArrayResult1(arrayResult1);
+                      }}
+                      value={arrayResult1[index]}
+                    />
+                  </View>
+                );
+              }}
+            />
+          </View>
+          <View
+            style={{
+              alignItems: 'flex-start',
+              // backgroundColor:"black",
+              height: windowWidth / nombre2Array.length - 1,
+            }}>
+            <FlatGrid
+              itemDimension={(windowWidth * 0.98) / nombre2Array.length}
+              fixed
+              spacing={0}
+              data={[...Array(7).keys()]}
+              renderItem={({item, index}) => {
+                return (
+                  <View>
+                    <TextInput
+                      style={styles.inputOperation}
+                      keyboardType="number-pad"
+                      onChangeText={text => {
+                        arrayResult2[index] = text;
+                        setArrayResult2(arrayResult2);
+                      }}
+                      value={arrayResult2[index]}
+                    />
+                  </View>
+                );
+              }}
+            />
+          </View>
+
+          <View>
+            <TextInput
+              keyboardType="number-pad"
+              style={styles.inputRetenue}
+              onChangeText={text => {
+                setRetenue(text);
+              }}
+              value={retenue}
+              onFocus={() => setRetenue('')}
+            />
+          </View>
+        </View>
+      ) : null}
+    </>
+  );
+};
+export default Multiplication;
