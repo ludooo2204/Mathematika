@@ -5,13 +5,14 @@ import {
   Button,
   Dimensions,
   TextInput,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import DataContext from './Context';
 import LigneMultiplication from './LigneMultiplication';
+import LigneResultatsMultiplication from './LigneResultatsMultiplication';
 
 import {FlatGrid} from 'react-native-super-grid';
-
+import {nbrDigitToMultiplication} from '../helpers/functions';
 
 const Multiplication = ({input}) => {
   const [nombre1Array, setnombre1Array] = useState(null);
@@ -21,42 +22,34 @@ const Multiplication = ({input}) => {
   const [arrayResult3, setArrayResult3] = useState([]);
 
   const [retenue, setRetenue] = useState('0');
-  const { data, updateData } = useContext(DataContext);
-  
+  const {data, updateData} = useContext(DataContext);
+
   const windowWidth = Dimensions.get('window').width;
 
   useEffect(() => {
     console.log('go');
-    
+
     const choixNbrDigit1 = 3;
     const choixNbrDigit2 = 2;
-    const nombre1 = Math.round(Math.random() * Math.pow(10, choixNbrDigit1));
-    const nombre2 = Math.round(Math.random() * Math.pow(10, choixNbrDigit2));
-    console.log('nbr1 ', nombre1, ' & nbr 2 ', nombre2);
-    let nombre1Array = nombre1.toString().split('');
-    let nombre2Array = nombre2.toString().split('');
 
-    const nbrChiffre1 = nombre1Array.length;
-    const nbrChiffre2 = nombre2Array.length;
-    const diff = Math.abs(nbrChiffre2 - nbrChiffre1);
+    const nombreAleat = nbrDigitToMultiplication(
+      choixNbrDigit1,
+      choixNbrDigit2,
+      setnombre1Array,
+      setnombre2Array,
+    );
 
-    for (let i = 0; i < diff; i++) {
-      nombre2Array.unshift('');
-    }
+    let dataObject = {
+      nombre1Array: nombreAleat.nombre1Array,
+      nombre2Array: nombreAleat.nombre2Array,
+      windowWidth: windowWidth,
+    };
+    console.log('dataObject');
+    console.log(dataObject);
 
-    nombre2Array.unshift('X');
-    nombre1Array.unshift('');
-
-    setnombre1Array(nombre1Array);
-    setnombre2Array(nombre2Array);
-    let dataObject={nombre1Array:nombre1Array,nombre2Array:nombre2Array,windowWidth:windowWidth}
-    console.log('dataObject')
-    console.log(dataObject)
-    // updateData({nombre1Array:nombre1Array,nombre2Array:nombre2Array,windowWidth:windowWidth})
+    //fonction pour update context
+    updateData(dataObject);
   }, []);
-
-
-
 
   const styles = nombre2Array
     ? StyleSheet.create({
@@ -85,7 +78,9 @@ const Multiplication = ({input}) => {
         },
       })
     : null;
-    nombre2Array ?console.log( nombre1Array, nombre2Array,windowWidth,styles):null
+  nombre2Array
+    ? console.log(nombre1Array, nombre2Array, windowWidth, styles)
+    : null;
   return (
     <>
       {nombre2Array ? (
@@ -93,109 +88,29 @@ const Multiplication = ({input}) => {
           <Button title="change le theme" onPress={() => setTheme('Dark')} />
           <LigneMultiplication
             nombre1Array={nombre1Array}
-            nombre2Array={nombre2Array}
-                      
+            nbrDigit={nombre2Array.length}
           />
-          <LigneMultiplication
-            nombre1Array={nombre1Array}
-            nombre2Array={nombre2Array}
-           
-          />
-          <View
-            style={{
-              alignItems: 'flex-end',
-              height: (windowWidth * 0.98) / nombre2Array.length,
-            }}>
-            <FlatGrid
-              itemDimension={(windowWidth * 0.98) / nombre2Array.length}
-              data={nombre1Array}
-              fixed
-              spacing={0}
-              renderItem={({item}) => (
-                <Text style={styles.textOperation}>{item}</Text>
-              )}
-            />
-          </View>
 
-          <View
-            style={{
-              alignItems: 'flex-end',
-              height: windowWidth / nombre2Array.length - 1,
-            }}>
-            <FlatGrid
-              itemDimension={(windowWidth * 0.98) / nombre2Array.length}
-              data={nombre2Array}
-              fixed
-              spacing={0}
-              renderItem={({item}) => (
-                <Text style={styles.textOperation}>{item}</Text>
-              )}
-            />
-          </View>
+          <LigneMultiplication
+            nombre1Array={nombre2Array}
+            nbrDigit={nombre2Array.length}
+          />
+          {/* BARRE OPERATION */}
           <View
             style={{
               height: 3,
               backgroundColor: 'black',
             }}></View>
-          <View
-            style={{
-              alignItems: 'flex-start',
-              // backgroundColor: 'blue',
-              // flex:1
-              // height: windowWidth,
-              height: windowWidth / nombre2Array.length - 1,
-            }}>
-            <FlatGrid
-              itemDimension={(windowWidth * 0.98) / nombre2Array.length}
-              fixed
-              spacing={0}
-              data={[...Array(7).keys()]}
-              // data={[...Array(3).keys()]}
-              renderItem={({item, index}) => {
-                return (
-                  <View>
-                    <TextInput
-                      keyboardType="number-pad"
-                      style={styles.inputOperation}
-                      onChangeText={text => {
-                        arrayResult1[index] = text;
-                        setArrayResult1(arrayResult1);
-                      }}
-                      value={arrayResult1[index]}
-                    />
-                  </View>
-                );
-              }}
-            />
-          </View>
-          <View
-            style={{
-              alignItems: 'flex-start',
-              // backgroundColor:"black",
-              height: windowWidth / nombre2Array.length - 1,
-            }}>
-            <FlatGrid
-              itemDimension={(windowWidth * 0.98) / nombre2Array.length}
-              fixed
-              spacing={0}
-              data={[...Array(7).keys()]}
-              renderItem={({item, index}) => {
-                return (
-                  <View>
-                    <TextInput
-                      style={styles.inputOperation}
-                      keyboardType="number-pad"
-                      onChangeText={text => {
-                        arrayResult2[index] = text;
-                        setArrayResult2(arrayResult2);
-                      }}
-                      value={arrayResult2[index]}
-                    />
-                  </View>
-                );
-              }}
-            />
-          </View>
+          <LigneResultatsMultiplication
+            arrayResult={arrayResult1}
+            setArrayResult={setArrayResult1}
+            nbrDigit={nombre2Array.length}
+          />
+          <LigneResultatsMultiplication
+            arrayResult={arrayResult2}
+            setArrayResult={setArrayResult2}
+            nbrDigit={nombre2Array.length}
+          />
 
           <View>
             <TextInput

@@ -1,38 +1,36 @@
-import React ,{useContext}from 'react';
-import {View,Dimensions,  Text} from 'react-native';
-import styles from './styles'
+import React, {useContext} from 'react';
+import {View, Dimensions, Text} from 'react-native';
+
 import {FlatGrid} from 'react-native-super-grid';
 import DataContext from './Context';
- const LigneMultiplication = ({
-  nombre1Array,
-  nombre2Array,
-}) => {
-    const windowWidth = Dimensions.get('window').width;
-    console.log( nombre1Array, nombre2Array)
-    console.log("nono")
-    const { data, updateData } = useContext(DataContext);
-    console.log(data)
+
+const LigneMultiplication = ({nombre1Array, nbrDigit}) => {
+  const windowWidth = Dimensions.get('window').width;
+  const {data, updateData} = useContext(DataContext);
+  console.log('data');
+  console.log(data);
   return (
-      
     <View
       style={{
         alignItems: 'flex-end',
-        height: (windowWidth * 0.98) / nombre2Array.length,
+        height: (windowWidth * 0.98) / nbrDigit,
       }}>
       <FlatGrid
-        itemDimension={(windowWidth * 0.98) / nombre2Array.length}
+        itemDimension={(windowWidth * 0.98) / nbrDigit}
         data={nombre1Array}
         fixed
         spacing={0}
         renderItem={({item}) => (
-        //   <Text >{item}</Text>
-          <Text style={{
-            borderRadius: 5,
-            backgroundColor: '#ebedf0',
-            fontSize: 40,
-            paddingHorizontal: (windowWidth * 0.8) / nombre2Array.length / 3,
-            height: (windowWidth * 0.98) / nombre2Array.length,
-          }}>{item}</Text>
+          <Text
+            style={{
+              borderRadius: 5,
+              backgroundColor: '#ebedf0',
+              fontSize: 40,
+              paddingHorizontal: (windowWidth * 0.8) / nbrDigit / 3,
+              height: (windowWidth * 0.98) / nbrDigit,
+            }}>
+            {item}
+          </Text>
         )}
       />
     </View>
