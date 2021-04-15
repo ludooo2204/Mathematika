@@ -7,6 +7,7 @@ import DataContext from './Context';
 const LigneResultatsMultiplication =({arrayResult,setArrayResult,nbrDigit})=>{
     const windowWidth = Dimensions.get('window').width;
     const {data, updateData} = useContext(DataContext);
+    console.log("nbrDigit",nbrDigit)
     return (
 <View
 style={{
@@ -17,7 +18,7 @@ style={{
   itemDimension={(windowWidth * 0.98) / nbrDigit}
   fixed
   spacing={0}
-  data={[...Array(7).keys()]}
+  data={[...Array(nbrDigit).keys()]}
   renderItem={({item, index}) => {
     return (
       <View>

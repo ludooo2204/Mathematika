@@ -7,8 +7,7 @@ import DataContext from './Context';
 const LigneMultiplication = ({nombre1Array, nbrDigit}) => {
   const windowWidth = Dimensions.get('window').width;
   const {data, updateData} = useContext(DataContext);
-  console.log('data');
-  console.log(data);
+  console.log("totolasticot",nombre1Array)
   return (
     <View
       style={{
