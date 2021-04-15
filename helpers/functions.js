@@ -24,13 +24,13 @@ export  const nbrDigitToMultiplication=(choixNbrDigit1,choixNbrDigit2,setnombre1
     console.log("nbrChiffreResultat",nbrChiffreResultat)
     console.log("nbrChiffre1",nbrChiffre1)
     console.log("nbrChiffre2",nbrChiffre2)
-    const diff = Math.abs(nbrChiffreResultat - nbrChiffre1);
-console.log("diff",diff)
-    for (let i = 0; i < diff+1; i++) {
+ 
+    while (nombre2Array.length<nbrChiffreResultat-1){
       nombre2Array.unshift('');
    
     }
-    for (let i = 0; i < diff; i++) {
+  
+    while (nombre1Array.length<nbrChiffreResultat){
       nombre1Array.unshift('');
    
     }

@@ -14,7 +14,7 @@ import LigneResultatsMultiplication from './LigneResultatsMultiplication';
 import {FlatGrid} from 'react-native-super-grid';
 import {nbrDigitToMultiplication} from '../helpers/functions';
 
-const Multiplication = ({input}) => {
+const Multiplication = ({input, navigation }) => {
   const [nombre1Array, setnombre1Array] = useState(null);
   const [nombre2Array, setnombre2Array] = useState(null);
   const [nbrLigneResult, setnbrLigneResultat] = useState(null);
@@ -29,10 +29,10 @@ const Multiplication = ({input}) => {
   const {data, updateData} = useContext(DataContext);
 
   const windowWidth = Dimensions.get('window').width;
-console.log("arrayResult",arrayResult)
+  console.log('arrayResult', arrayResult);
   useEffect(() => {
-    const choixNbrDigit1 = 3;
-    const choixNbrDigit2 =3;
+    const choixNbrDigit1 = 6;
+    const choixNbrDigit2 = 3;
     const nombreAleat = nbrDigitToMultiplication(
       choixNbrDigit1,
       choixNbrDigit2,
@@ -44,7 +44,7 @@ console.log("arrayResult",arrayResult)
     let dataObject = {
       nombre1Array: nombreAleat.nombre1Array,
       nombre2Array: nombreAleat.nombre2Array,
-      nbrLigneResultatGlobal:nombreAleat.nbrLigneResultat,
+      nbrLigneResultatGlobal: nombreAleat.nbrLigneResultat,
       windowWidth: windowWidth,
     };
     console.log('dataObject');
@@ -59,7 +59,8 @@ console.log("arrayResult",arrayResult)
         test = [[arrayResult1, setArrayResult1]];
         setArrayResult(test);
         break;
-      case 2:console.log("toto")
+      case 2:
+        console.log('toto');
         test = [
           [arrayResult1, setArrayResult1],
           [arrayResult2, setArrayResult2],
@@ -98,7 +99,7 @@ console.log("arrayResult",arrayResult)
       default:
         break;
     }
-    console.log('arrayResult ALORS ?', arrayResult);
+    // console.log('arrayResult ALORS ?', arrayResult);
   }, []);
 
   const styles = nombre2Array
@@ -108,7 +109,8 @@ console.log("arrayResult",arrayResult)
           backgroundColor: 'green',
           fontSize: 50,
           marginTop: 10,
-          paddingHorizontal: (windowWidth * 0.98) / nombre2Array.length / 5,
+          padding: 0,
+          paddingHorizontal: (windowWidth * 0.98) / nombre2Array.length / 2,
           height: windowWidth * 0.2,
           width: windowWidth * 0.2,
         },
@@ -133,9 +135,11 @@ console.log("arrayResult",arrayResult)
     <>
       {nombre2Array ? (
         <View>
-          <Button title="change le theme" onPress={() => setTheme('Dark')} />
-<Text>{JSON.stringify(nombre1Array)}</Text>
-<Text>{JSON.stringify(nombre2Array)}</Text>
+          {/* <Button title="change le theme" onPress={() => setTheme('Dark')} /> */}
+          <Button
+        title="Go to gif"
+        onPress={() => navigation.navigate('gif')}
+      />
           {[nombre1Array, nombre2Array].map((item, index) => {
             // {[nombre1Array, nombre2Array].map((item,index) => {
             return (
@@ -153,18 +157,18 @@ console.log("arrayResult",arrayResult)
               backgroundColor: 'black',
             }}></View>
 
-          <Text>{JSON.stringify(arrayResult)}</Text>
-
-          {arrayResult?arrayResult.map((item, index) => {
-            return (
-              <LigneResultatsMultiplication
-                arrayResult={item[0]}
-                setArrayResult={item[1]}
-                key={index}
-                nbrDigit={nombre2Array.length}
-              />
-            );
-          }):null}
+          {arrayResult
+            ? arrayResult.map((item, index) => {
+                return (
+                  <LigneResultatsMultiplication
+                    arrayResult={item[0]}
+                    setArrayResult={item[1]}
+                    key={index}
+                    nbrDigit={nombre2Array.length}
+                  />
+                );
+              })
+            : null}
 
           {/* <LigneResultatsMultiplication
             arrayResult={arrayResult1}

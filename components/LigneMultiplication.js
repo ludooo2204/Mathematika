@@ -11,7 +11,7 @@ const LigneMultiplication = ({nombre1Array, nbrDigit}) => {
   return (
     <View
       style={{
-        alignItems: 'flex-end',
+        alignItems: 'flex-start',
         height: (windowWidth * 0.98) / nbrDigit,
       }}>
       <FlatGrid
@@ -24,7 +24,7 @@ const LigneMultiplication = ({nombre1Array, nbrDigit}) => {
             style={{
               borderRadius: 5,
               backgroundColor: '#ebedf0',
-              fontSize: 40,
+              fontSize: 30,
               paddingHorizontal: (windowWidth * 0.8) / nbrDigit / 3,
               height: (windowWidth * 0.98) / nbrDigit,
             }}>
