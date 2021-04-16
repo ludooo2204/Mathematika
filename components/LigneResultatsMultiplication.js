@@ -1,28 +1,28 @@
-import React, {useContext, useState,useEffect} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, Dimensions, TextInput} from 'react-native';
-import { clockRunning } from 'react-native-reanimated';
+import {clockRunning} from 'react-native-reanimated';
 
 import {FlatGrid} from 'react-native-super-grid';
 import DataContext from './Context';
 
 const LigneResultatsMultiplication = ({
   arrayResult,
+  caseSelection,
   setArrayResult,
   nbrDigit,
-  numeroLigne
+  numeroLigne,
 }) => {
+  // const [inputNumber, setInputNumber] = useState('');
+  // const [indexCase, setIndexCase] = useState(null);
+  // const [indexCase, setIndexCase] = useState(null);
 
-  const [inputNumber, setInputNumber] = useState('');
-  const [indexCase, setIndexCase] = useState(null)
-  
   const windowWidth = Dimensions.get('window').width;
   const {data, updateData} = useContext(DataContext);
-useEffect(() => {
-  console.log('effect from ligneResultatMultiplication')
-  console.log(indexCase)
-  
-})
-// console.log(data)
+  // useEffect(() => {
+  //   console.log('effect from ligneResultatMultiplication');
+  //   console.log(indexCase);
+  // });
+  // console.log(data)
   return (
     <View
       style={{
@@ -50,19 +50,18 @@ useEffect(() => {
                   height: (windowWidth * 0.98) / nbrDigit,
                 }}
                 onChangeText={text => {
-                  console.log(text);
-                  setInputNumber(text);
-                  console.log(arrayResult);
+                  // setInputNumber(text);
                   arrayResult[index] = text;
                   setArrayResult(arrayResult);
                 }}
                 onFocus={e => {
                   e.target.clear();
-                let coordLigneIndex=[index,numeroLigne]
-                  data.coordLigneIndexSelectionne=coordLigneIndex
-                  updateData(data)
-                  setIndexCase(coordLigneIndex)
-
+                  let coordLigneIndex = [index, numeroLigne];
+                  data.coordLigneIndexSelectionne = coordLigneIndex;
+                  updateData(data);
+                  // setIndexCase(coordLigneIndex);
+                  caseSelection(coordLigneIndex)
+                  
                 }}
               />
             </View>

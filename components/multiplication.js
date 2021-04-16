@@ -24,6 +24,7 @@ const Multiplication = ({input, navigation }) => {
   const [arrayResult3, setArrayResult3] = useState([]);
   const [arrayResult4, setArrayResult4] = useState([]);
   const [arrayResult5, setArrayResult5] = useState([]);
+  const [caseSelection, setCaseSelection] = useState(null);
 
   const [retenue, setRetenue] = useState('0');
   const {data, updateData} = useContext(DataContext);
@@ -32,7 +33,7 @@ const Multiplication = ({input, navigation }) => {
   // console.log('arrayResult', arrayResult);
   useEffect(() => {
     const choixNbrDigit1 = 6;
-    const choixNbrDigit2 = 3;
+    const choixNbrDigit2 = 5;
     const nombreAleat = nbrDigitToMultiplication(
       choixNbrDigit1,
       choixNbrDigit2,
@@ -45,6 +46,8 @@ const Multiplication = ({input, navigation }) => {
       nombre1Array: nombreAleat.nombre1Array,
       nombre2Array: nombreAleat.nombre2Array,
       nbrLigneResultatGlobal: nombreAleat.nbrLigneResultat,
+      nbr1:nombreAleat.nbr1,
+      nbr2:nombreAleat.nbr1,
       windowWidth: windowWidth,
     };
     console.log('dataObject');
@@ -140,12 +143,15 @@ const Multiplication = ({input, navigation }) => {
         title="Go to gif"
         onPress={() => navigation.navigate('gif')}
       />
+      <Text>{JSON.stringify(caseSelection)}</Text>
           {[nombre1Array, nombre2Array].map((item, index) => {
             // {[nombre1Array, nombre2Array].map((item,index) => {
             return (
               <LigneMultiplication
+              caseSelection={caseSelection}
                 nombre1Array={item}
                 nbrDigit={nombre2Array.length}
+                numeroLigne={index}
                 key={index}
               />
             );
@@ -162,6 +168,7 @@ const Multiplication = ({input, navigation }) => {
                 return (
                   <LigneResultatsMultiplication
                     arrayResult={item[0]}
+                    caseSelection={setCaseSelection}
                     setArrayResult={item[1]}
                     numeroLigne={index}
                     key={index}

@@ -42,5 +42,5 @@ export  const nbrDigitToMultiplication=(choixNbrDigit1,choixNbrDigit2,setnombre1
     setnbrLigneResultat(nbrChiffre2)
 console.log("func",nbrChiffre2)
 console.log("et la ?",nombre1Array,nombre2Array)
-    return {nombre1Array:nombre1Array,nombre2Array:nombre2Array,nbrLigneResultat:nbrChiffre2}
+    return {nombre1Array:nombre1Array,nombre2Array:nombre2Array,nbrLigneResultat:nbrChiffre2,nbr1:nombre1,nbr2:nombre2}
   }
