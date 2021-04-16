@@ -10,11 +10,11 @@ import {
 import DataContext from './Context';
 import LigneMultiplication from './LigneMultiplication';
 import LigneResultatsMultiplication from './LigneResultatsMultiplication';
-
+import ResultatsMultiplication from './ResultatsMultiplication';
 
 import {nbrDigitToMultiplication} from '../helpers/functions';
 
-const Multiplication = ({input, navigation }) => {
+const Multiplication = ({input, navigation}) => {
   const [nombre1Array, setnombre1Array] = useState(null);
   const [nombre2Array, setnombre2Array] = useState(null);
   const [nbrLigneResult, setnbrLigneResultat] = useState(null);
@@ -24,13 +24,14 @@ const Multiplication = ({input, navigation }) => {
   const [arrayResult3, setArrayResult3] = useState([]);
   const [arrayResult4, setArrayResult4] = useState([]);
   const [arrayResult5, setArrayResult5] = useState([]);
+  const [arrayResultTotal, setArrayResultTotal] = useState([]);
   const [caseSelection, setCaseSelection] = useState(null);
 
   const [retenue, setRetenue] = useState('0');
   const {data, updateData} = useContext(DataContext);
 
   const windowWidth = Dimensions.get('window').width;
-  // console.log('arrayResult', arrayResult);
+  console.log('resutat', arrayResultTotal);
   useEffect(() => {
     const choixNbrDigit1 = 6;
     const choixNbrDigit2 = 5;
@@ -46,8 +47,8 @@ const Multiplication = ({input, navigation }) => {
       nombre1Array: nombreAleat.nombre1Array,
       nombre2Array: nombreAleat.nombre2Array,
       nbrLigneResultatGlobal: nombreAleat.nbrLigneResultat,
-      nbr1:nombreAleat.nbr1,
-      nbr2:nombreAleat.nbr1,
+      nbr1: nombreAleat.nbr1,
+      nbr2: nombreAleat.nbr1,
       windowWidth: windowWidth,
     };
     console.log('dataObject');
@@ -134,21 +135,25 @@ const Multiplication = ({input, navigation }) => {
       })
     : null;
   // console.log("arrayResult",arrayResult)
+  const validationResultat = ()=>{
+    console.log(arrayResultTotal)
+
+  }
   return (
     <>
       {nombre2Array ? (
         <View>
           {/* <Button title="change le theme" onPress={() => setTheme('Dark')} /> */}
           <Button
-        title="Go to gif"
-        onPress={() => navigation.navigate('gif')}
-      />
-      <Text>{JSON.stringify(caseSelection)}</Text>
+            title="Go to gif"
+            onPress={() => navigation.navigate('gif')}
+          />
+          <Text>{JSON.stringify(caseSelection)}</Text>
           {[nombre1Array, nombre2Array].map((item, index) => {
             // {[nombre1Array, nombre2Array].map((item,index) => {
             return (
               <LigneMultiplication
-              caseSelection={caseSelection}
+                caseSelection={caseSelection}
                 nombre1Array={item}
                 nbrDigit={nombre2Array.length}
                 numeroLigne={index}
@@ -177,8 +182,20 @@ const Multiplication = ({input, navigation }) => {
                 );
               })
             : null}
+          <View
+            style={{
+              height: 3,
+              backgroundColor: 'black',
+            }}></View>
+          <ResultatsMultiplication
+            arrayResultTotal={arrayResultTotal}
+            // caseSelection={setCaseSelection}
+            setArrayResultTotal={setArrayResultTotal}
+            // numeroLigne={index}
+            // key={index}
+            nbrDigit={nombre2Array.length}
+          />
 
-        
           {/* RETENUE */}
           <View>
             <TextInput
@@ -191,6 +208,12 @@ const Multiplication = ({input, navigation }) => {
               onFocus={() => setRetenue('')}
             />
           </View>
+          <View>
+            <Button
+            title="valider resultats?"
+            onPress={validationResultat}
+            />
+          </View>
           {/* <Text>{JSON.stringify(data)}</Text> */}
         </View>
       ) : null}
@@ -198,11 +221,10 @@ const Multiplication = ({input, navigation }) => {
   );
 };
 
-
-function ModalScreen({ navigation }) {
+function ModalScreen({navigation}) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text style={{fontSize: 30}}>This is a modal!</Text>
       <Button onPress={() => navigation.goBack()} title="Dismiss" />
     </View>
   );
