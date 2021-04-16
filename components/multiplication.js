@@ -11,7 +11,7 @@ import DataContext from './Context';
 import LigneMultiplication from './LigneMultiplication';
 import LigneResultatsMultiplication from './LigneResultatsMultiplication';
 
-import {FlatGrid} from 'react-native-super-grid';
+
 import {nbrDigitToMultiplication} from '../helpers/functions';
 
 const Multiplication = ({input, navigation }) => {
@@ -29,7 +29,7 @@ const Multiplication = ({input, navigation }) => {
   const {data, updateData} = useContext(DataContext);
 
   const windowWidth = Dimensions.get('window').width;
-  console.log('arrayResult', arrayResult);
+  // console.log('arrayResult', arrayResult);
   useEffect(() => {
     const choixNbrDigit1 = 6;
     const choixNbrDigit2 = 3;
@@ -163,6 +163,7 @@ const Multiplication = ({input, navigation }) => {
                   <LigneResultatsMultiplication
                     arrayResult={item[0]}
                     setArrayResult={item[1]}
+                    numeroLigne={index}
                     key={index}
                     nbrDigit={nombre2Array.length}
                   />
@@ -170,17 +171,7 @@ const Multiplication = ({input, navigation }) => {
               })
             : null}
 
-          {/* <LigneResultatsMultiplication
-            arrayResult={arrayResult1}
-            setArrayResult={setArrayResult1}
-            nbrDigit={nombre2Array.length}
-          />
-          <LigneResultatsMultiplication
-            arrayResult={arrayResult2}
-            setArrayResult={setArrayResult2}
-            nbrDigit={nombre2Array.length}
-          /> */}
-
+        
           {/* RETENUE */}
           <View>
             <TextInput
@@ -193,9 +184,20 @@ const Multiplication = ({input, navigation }) => {
               onFocus={() => setRetenue('')}
             />
           </View>
+          {/* <Text>{JSON.stringify(data)}</Text> */}
         </View>
       ) : null}
     </>
   );
 };
+
+
+function ModalScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
+      <Button onPress={() => navigation.goBack()} title="Dismiss" />
+    </View>
+  );
+}
 export default Multiplication;

@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Multiplication from './components/multiplication';
+import Menu from './components/menu';
 import Division from './components/division';
 import Gif from './components/gif';
 import styles from './components/styles';
@@ -15,7 +16,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const [dataContext, setDataContext] = useState(null);
 
-  const [resultProps, setResultProps] = useState('');
+
 
   const contextValue = {
     data: dataContext, //ou juste theme,
@@ -24,12 +25,13 @@ export default function App() {
   return (
     <DataContext.Provider value={contextValue}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="multiplication">
+        <Stack.Navigator initialRouteName="menu">
           {/* <View style={styles.view}> */}
           {/* <Gif /> */}
           {/* <Text>{dataContext}</Text>  */}
-          <Stack.Screen name="multiplication" component={Multiplication} />
-          <Stack.Screen name="gif" component={Gif} />
+          <Stack.Screen name="menu" component={Menu} options={{headerShown:false}}/>
+          <Stack.Screen name="multiplication" component={Multiplication} options={{headerShown:false}} />
+          <Stack.Screen name="gif" component={Gif} options={{headerShown:false}}/>
           {/* <Multiplication input={resultProps} /> */}
           {/* <Division /> */}
           {/* </View> */}

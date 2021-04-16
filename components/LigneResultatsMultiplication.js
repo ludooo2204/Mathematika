@@ -1,48 +1,75 @@
-import React, {useContext} from 'react';
-import {View, Dimensions,TextInput} from 'react-native';
+import React, {useContext, useState,useEffect} from 'react';
+import {View, Dimensions, TextInput} from 'react-native';
+import { clockRunning } from 'react-native-reanimated';
 
 import {FlatGrid} from 'react-native-super-grid';
 import DataContext from './Context';
 
-const LigneResultatsMultiplication =({arrayResult,setArrayResult,nbrDigit})=>{
-    const windowWidth = Dimensions.get('window').width;
-    const {data, updateData} = useContext(DataContext);
-    console.log("nbrDigit",nbrDigit)
-    return (
-<View
-style={{
-  alignItems: 'flex-start',
-  height: (windowWidth * 0.98) / nbrDigit,
-}}>
-<FlatGrid
-  itemDimension={(windowWidth * 0.98) / nbrDigit}
-  fixed
-  spacing={0}
-  data={[...Array(nbrDigit).keys()]}
-  renderItem={({item, index}) => {
-    return (
-      <View >
-        <TextInput
-          keyboardType="number-pad"
-          style={{
-            borderRadius: 5,
-            backgroundColor: '#ebedf0',
-            fontSize: 30,
-            padding:0,
-            paddingHorizontal: (windowWidth * 0.8) / nbrDigit / 3,
-            height: (windowWidth * 0.98) / nbrDigit,
-          }}
-          onChangeText={text => {
-            arrayResult[index] = text;
-            setArrayResult(arrayResult);
-          }}
-          value={arrayResult[index]}
-        />
-      </View>
-    );
-  }}
-/>
-</View>
-    )
-}
+const LigneResultatsMultiplication = ({
+  arrayResult,
+  setArrayResult,
+  nbrDigit,
+  numeroLigne
+}) => {
+
+  const [inputNumber, setInputNumber] = useState('');
+  const [indexCase, setIndexCase] = useState(null)
+  
+  const windowWidth = Dimensions.get('window').width;
+  const {data, updateData} = useContext(DataContext);
+useEffect(() => {
+  console.log('effect from ligneResultatMultiplication')
+  console.log(indexCase)
+  
+})
+// console.log(data)
+  return (
+    <View
+      style={{
+        alignItems: 'flex-start',
+        height: (windowWidth * 0.98) / nbrDigit,
+      }}>
+      <FlatGrid
+        itemDimension={(windowWidth * 0.98) / nbrDigit}
+        fixed
+        spacing={0}
+        data={[...Array(nbrDigit).keys()]}
+        renderItem={({item, index}) => {
+          // console.log("item",item)
+          return (
+            <View>
+              <TextInput
+                keyboardType="number-pad"
+                style={{
+                  borderRadius: 5,
+                  backgroundColor: '#ebedf0',
+                  fontSize: 30,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  padding: 0,
+                  height: (windowWidth * 0.98) / nbrDigit,
+                }}
+                onChangeText={text => {
+                  console.log(text);
+                  setInputNumber(text);
+                  console.log(arrayResult);
+                  arrayResult[index] = text;
+                  setArrayResult(arrayResult);
+                }}
+                onFocus={e => {
+                  e.target.clear();
+                let coordLigneIndex=[index,numeroLigne]
+                  data.coordLigneIndexSelectionne=coordLigneIndex
+                  updateData(data)
+                  setIndexCase(coordLigneIndex)
+
+                }}
+              />
+            </View>
+          );
+        }}
+      />
+    </View>
+  );
+};
 export default LigneResultatsMultiplication;
