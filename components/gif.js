@@ -18,11 +18,11 @@ export default function Gif() {
       const API_KEY = '0QfmpS6iiPES7vNCLxxDV91CBzxK35iV';
       const BASE_URL = 'http://api.giphy.com/v1/gifs/search';
       const resJson = await fetch(
-        `${BASE_URL}?api_key=${API_KEY}&q=${term}&offset=100`,
+        `${BASE_URL}?api_key=${API_KEY}&q=dog&offset=100`,
+        // `${BASE_URL}?api_key=${API_KEY}&q=${term}&offset=100`,
       );
       const res = await resJson.json();
-      // console.log((res.data))
-      // console.log(Object.keys(res.data[0]))
+
       setGifs(res.data);
     } catch (error) {
       console.warn(error);
