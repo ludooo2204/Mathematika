@@ -180,7 +180,7 @@ const Multiplication = ({ input, navigation }) => {
             }}
           >
 
-            <Gif/>
+            <Gif sujetGif="dog" />
           </Modal>
           <Text>{JSON.stringify(caseSelection)}</Text>
           {[nombre1Array, nombre2Array].map((item, index) => {

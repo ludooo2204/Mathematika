@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     View,
@@ -9,17 +9,18 @@ import {
     TouchableOpacity,
   } from 'react-native';
   import styles from './styles'
-export default function Gif() {
+export default function Gif({sujetGif}) {
     const [gifs, setGifs] = useState([]);
-    const [term, updateTerm] = useState('');
+    // const [term, updateTerm] = useState('');
     
   async function fetchGifs() {
     try {
       const API_KEY = '0QfmpS6iiPES7vNCLxxDV91CBzxK35iV';
       const BASE_URL = 'http://api.giphy.com/v1/gifs/search';
+      const term=sujetGif
       const resJson = await fetch(
-        `${BASE_URL}?api_key=${API_KEY}&q=dog&offset=100`,
-        // `${BASE_URL}?api_key=${API_KEY}&q=${term}&offset=100`,
+        // `${BASE_URL}?api_key=${API_KEY}&q=dog&offset=100`,
+        `${BASE_URL}?api_key=${API_KEY}&q=${term}&offset=100`,
       );
       const res = await resJson.json();
 
@@ -30,20 +31,22 @@ export default function Gif() {
   } /// add facebook fresco
 
   function onEdit(newTerm) {
-    updateTerm(newTerm);
+    // updateTerm(newTerm);
     fetchGifs();
   }
-
+  useEffect(()=>{console.log("useeffect GIF",sujetGif); fetchGifs()},[])
+  // onEdit(sujetGif)
+  console.log("GIF",sujetGif)
 
     return (
         <>
-<TextInput
+{/* <TextInput
           placeholder="Search Giphy"
           placeholderTextColor="#f0f"
           style={styles.textInput}
-          onChangeText={text => onEdit(text)}
+          onChangeText={text => console.log(text)}
 
-        />
+        /> */}
 
         {gifs.length > 0 && (
             <Image
